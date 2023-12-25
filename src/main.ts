@@ -3,6 +3,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { createRouter, createWebHistory} from 'vue-router'
 import HomePage from './components/HomePage.vue';
+import CreateScript from './components/CreateScript.vue'
 
 
 const router = createRouter({
@@ -19,7 +20,7 @@ const router = createRouter({
         {
             path: "/create-snippet",
             name: "Create",
-            component: HomePage,
+            component: CreateScript,
             meta: {
                 title: "Create Snippet"
             }
