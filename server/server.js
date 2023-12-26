@@ -27,20 +27,28 @@ app.post('/api/snippets', async (req, res) => {
     });
     res.statusCode = 200;
     res.json(snippet);
-  } else if (req.method == "GET") {
-    const slug = req.query.slug;
-    const snippet = await Snippet.findOne({
-      slug,
-    })
-    res.statusCode = 200;
-    res.json(snippet);
-  }
-  else {
+  } else {
     throw new Error(
       "http method not supported on this endpoint"
     );
   }
 });
+
+app.get('/api/snippets/:slug', async (req, res) => {
+  await connect();
+
+  const { slug } = req.params; // Get slug from URL parameters
+  const snippet = await Snippet.findOne({ slug });
+
+  if (snippet) {
+    res.statusCode = 200;
+    res.json(snippet.snippet);
+  } else {
+    res.statusCode = 404;
+    res.json({ message: "Snippet not found" });
+  }
+});
+
 
 // Start the server
 app.listen(PORT, () => {

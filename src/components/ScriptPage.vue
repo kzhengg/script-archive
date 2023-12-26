@@ -8,15 +8,14 @@ const route = useRoute();
 
 const getSnippet = async () => {
     const slug = route.path.substr(1,);
-    const response = await fetch(`http://localhost:3000/api/snippets?slug=${slug}`, {
+    const response = await fetch(`http://localhost:3000/api/snippets/${slug}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
-
-
     snippetContent.value = await response.json();
+    console.log('tet',snippetContent.value)
 }
 
 onMounted(() => {
