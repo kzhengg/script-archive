@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
 
 const snippetContent = ref('');
+const snippetSlug = ref('');
+
 
 const route = useRoute();
+const router = useRouter();
+
 
 const getSnippet = async () => {
     const slug = route.path.substr(1,);
@@ -14,8 +18,12 @@ const getSnippet = async () => {
         'Content-Type': 'application/json',
       },
     });
-    snippetContent.value = await response.json();
-    console.log('tet',snippetContent.value)
+    if (response.status === 404) {
+        router.push('/404')
+    }
+    const snippetObj = (await response.json());
+    snippetContent.value = snippetObj.snippet;
+    snippetSlug.value = snippetObj.slug;
 }
 
 onMounted(() => {
@@ -25,7 +33,7 @@ onMounted(() => {
 
 <template>
   <div class="text-center p-20">
-    <h1 class="text-4xl font-bold text-gray-800 mb-2">Text-Holder</h1>
+    <h1 class="text-4xl font-bold text-gray-800 mb-2">{{snippetSlug}}</h1>
     <div class="flex flex-col space-y-4 p-4">
       <textarea 
         v-model="snippetContent"

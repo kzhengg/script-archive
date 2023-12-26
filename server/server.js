@@ -42,7 +42,7 @@ app.get('/api/snippets/:slug', async (req, res) => {
 
   if (snippet) {
     res.statusCode = 200;
-    res.json(snippet.snippet);
+    res.json(snippet);
   } else {
     res.statusCode = 404;
     res.json({ message: "Snippet not found" });

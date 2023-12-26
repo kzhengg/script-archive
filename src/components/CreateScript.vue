@@ -14,7 +14,6 @@ const createSnippet = async () => {
       },
       body: JSON.stringify({ content: snippetContent.value }),
     });
-
     const createdSnippet = await response.json();
     router.push(`${createdSnippet.slug}`);
 };
