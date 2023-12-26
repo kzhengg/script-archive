@@ -1,17 +1,12 @@
 import mongoose from "mongoose";
+import 'dotenv/config'
 
 let isConnected = false;
 
 export const connect = async () => {
   if (!isConnected) {
     await mongoose.connect(
-      "mongodb://localhost/scriptarchive",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-      }
+      process.env.DB_CONNECTION
     );
     isConnected = true;
   }

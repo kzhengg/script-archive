@@ -16,18 +16,26 @@ app.post('/api/snippets', async (req, res) => {
   await connect();
 
   if (req.method === "POST") {
+
     const slug = randomstring.generate({
       length: 6,
       charset: "alphabetic",
     });
     const snippet = await Snippet.create({
-      snippet: req.body.snippet,
+      snippet: req.body.content,
       slug,
     });
-
     res.statusCode = 200;
     res.json(snippet);
-  } else {
+  } else if (req.method == "GET") {
+    const slug = req.query.slug;
+    const snippet = await Snippet.findOne({
+      slug,
+    })
+    res.statusCode = 200;
+    res.json(snippet);
+  }
+  else {
     throw new Error(
       "http method not supported on this endpoint"
     );

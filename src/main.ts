@@ -4,6 +4,8 @@ import App from './App.vue'
 import { createRouter, createWebHistory} from 'vue-router'
 import HomePage from './components/HomePage.vue';
 import CreateScript from './components/CreateScript.vue'
+import Page404 from './components/Page404.vue';
+import ScriptPage from './components/ScriptPage.vue';
 
 
 const router = createRouter({
@@ -25,6 +27,20 @@ const router = createRouter({
                 title: "Create Snippet"
             }
         },
+        {
+            path: "/:slug",
+            name: "Script",
+            component: ScriptPage,
+            meta: {
+                title: "Script Page"
+            }
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: '404',
+            component: Page404,
+            meta: { title: "Page not found"}
+          },
     ],
 });
 

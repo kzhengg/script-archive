@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const snippetContent = ref('');
 
+const router = useRouter()
+
 const createSnippet = async () => {
-  try {
     const response = await fetch('http://localhost:3000/api/snippets', {
       method: 'POST',
       headers: {
@@ -13,15 +15,8 @@ const createSnippet = async () => {
       body: JSON.stringify({ content: snippetContent.value }),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    // Handle the response here (e.g., show a success message)
-  } catch (error) {
-    console.error('Error creating snippet:', error);
-    // Handle the error here (e.g., show an error message)
-  }
+    const createdSnippet = await response.json();
+    router.push(`${createdSnippet.slug}`);
 };
 </script>
 
